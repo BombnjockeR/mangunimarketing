@@ -18,13 +18,13 @@ export function Overview() {
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-10">
-      <h1 className="font-display text-2xl text-charcoal">
+      <h1 className="text-2xl font-bold text-charcoal">
         {isBrand ? `Welcome back, ${session?.name}` : `Hi ${session?.name}`}
       </h1>
       <p className="mt-1 text-sm text-charcoal/60">
         {isBrand
-          ? "Here's what's moving across your briefs right now."
-          : "Here's what's in flight and what's ready to be paid out."}
+          ? "What's happening across your briefs."
+          : "What's in progress and what's ready to pay out."}
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -46,12 +46,12 @@ export function Overview() {
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
         <div>
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-lg text-charcoal">Coming up</h2>
+            <h2 className="text-lg font-semibold text-charcoal">Coming up</h2>
             <Link to="/app/board" className="text-sm text-signal hover:underline">
               View board
             </Link>
           </div>
-          <ul className="mt-4 divide-y divide-charcoal/10 rounded-lg border border-charcoal/10 bg-white">
+          <ul className="mt-4 divide-y divide-charcoal/10 rounded-xl border border-charcoal/[0.06] bg-white">
             {dueSoon.map((b) => (
               <li key={b.id} className="flex items-center gap-3 px-4 py-3">
                 <StatusDot status={b.status} />
@@ -68,12 +68,12 @@ export function Overview() {
 
         <div>
           <div className="flex items-center justify-between">
-            <h2 className="font-display text-lg text-charcoal">Recent payments</h2>
+            <h2 className="text-lg font-semibold text-charcoal">Recent payments</h2>
             <Link to="/app/payments" className="text-sm text-signal hover:underline">
               View all
             </Link>
           </div>
-          <ul className="mt-4 divide-y divide-charcoal/10 rounded-lg border border-charcoal/10 bg-white">
+          <ul className="mt-4 divide-y divide-charcoal/10 rounded-xl border border-charcoal/[0.06] bg-white">
             {transactions.slice(0, 4).map((t) => (
               <li key={t.id} className="flex items-center justify-between px-4 py-3">
                 <div>
@@ -101,9 +101,9 @@ export function Overview() {
 
 function StatCard({ label, value, tone }: { label: string; value: string; tone?: "signal" }) {
   return (
-    <div className="rounded-lg border border-charcoal/10 bg-white p-5">
+    <div className="rounded-xl border border-charcoal/[0.06] bg-white p-5">
       <div className="text-xs text-charcoal/50">{label}</div>
-      <div className={`mt-2 font-display text-2xl ${tone === "signal" ? "text-signal" : "text-charcoal"}`}>
+      <div className={`mt-2 text-2xl font-semibold ${tone === "signal" ? "text-signal" : "text-charcoal"}`}>
         {value}
       </div>
     </div>

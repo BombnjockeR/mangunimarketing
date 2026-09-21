@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
-import { useSession } from "../../lib/session";
 import clsx from "clsx";
+import { useSession } from "../../lib/session";
+import { Icon } from "../../components/Icons";
 
 export function AppLayout() {
   const { session, logout } = useSession();
@@ -11,12 +12,12 @@ export function AppLayout() {
   if (!session) return <Navigate to="/login" replace />;
 
   const nav = [
-    { to: "/app", label: "Overview", end: true },
-    { to: "/app/discover", label: session.role === "brand" ? "Creators" : "Open briefs" },
-    { to: "/app/board", label: "Board" },
-    { to: "/app/review", label: "Review" },
-    { to: "/app/analytics", label: "Performance" },
-    { to: "/app/payments", label: "Payments" },
+    { to: "/app", label: "Home", icon: Icon.home, end: true },
+    { to: "/app/discover", label: session.role === "brand" ? "Creators" : "Briefs", icon: Icon.users },
+    { to: "/app/board", label: "Board", icon: Icon.board },
+    { to: "/app/review", label: "Review", icon: Icon.pin },
+    { to: "/app/analytics", label: "Results", icon: Icon.chart },
+    { to: "/app/payments", label: "Payments", icon: Icon.wallet },
   ];
 
   function signOut() {
@@ -32,56 +33,56 @@ export function AppLayout() {
       onClick={() => setOpen(false)}
       className={({ isActive }) =>
         clsx(
-          "rounded-md px-3 py-2 text-sm transition-colors",
-          isActive ? "bg-ink-soft text-paper" : "text-mist hover:text-paper"
+          "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+          isActive ? "bg-signal-soft text-signal-dim" : "text-mist hover:bg-paper hover:text-charcoal"
         )
       }
     >
+      <item.icon className="h-5 w-5" />
       {item.label}
     </NavLink>
   ));
 
+  const account = (
+    <div className="flex items-center gap-3">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-signal text-sm font-semibold text-white">
+        {session.name.charAt(0).toUpperCase()}
+      </div>
+      <div className="min-w-0">
+        <div className="truncate text-sm font-medium">{session.name}</div>
+        <button onClick={signOut} className="text-xs text-mist hover:text-charcoal">
+          Log out
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="flex min-h-screen flex-col bg-paper md:flex-row">
-      {/* Desktop sidebar */}
-      <aside className="hidden w-56 shrink-0 flex-col justify-between border-r border-charcoal/10 bg-ink px-4 py-6 md:flex">
+      <aside className="hidden w-60 shrink-0 flex-col justify-between border-r border-charcoal/[0.06] bg-white px-4 py-6 md:flex">
         <div>
-          <div className="px-2 font-display text-lg text-paper">Manguni</div>
+          <div className="px-3 text-lg font-bold tracking-tight">Manguni</div>
           <nav className="mt-8 flex flex-col gap-1">{links}</nav>
         </div>
-        <div className="px-2">
-          <div className="text-sm text-paper">{session.name}</div>
-          <div className="text-xs capitalize text-mist">{session.role} account</div>
-          <button onClick={signOut} className="mt-3 text-xs text-mist hover:text-paper">
-            Log out
-          </button>
-        </div>
+        <div className="px-1">{account}</div>
       </aside>
 
-      {/* Mobile top bar */}
-      <header className="sticky top-0 z-30 border-b border-ink-line/60 bg-ink md:hidden">
+      <header className="sticky top-0 z-30 border-b border-charcoal/[0.06] bg-white md:hidden">
         <div className="flex items-center justify-between px-4 py-3">
-          <div className="font-display text-base text-paper">Manguni</div>
+          <div className="text-base font-bold tracking-tight">Manguni</div>
           <button
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
-            className="rounded-md border border-ink-line px-3 py-1.5 text-xs text-paper"
+            className="rounded-lg p-2 text-charcoal hover:bg-paper"
           >
-            {open ? "Close" : "Menu"}
+            {open ? <Icon.x className="h-5 w-5" /> : <Icon.menu className="h-5 w-5" />}
           </button>
         </div>
         {open && (
-          <nav className="flex flex-col gap-1 border-t border-ink-line/60 px-3 py-3">
+          <nav className="flex flex-col gap-1 border-t border-charcoal/[0.06] px-3 py-3">
             {links}
-            <div className="mt-2 flex items-center justify-between px-3 pt-3 text-xs text-mist">
-              <span>
-                {session.name} · <span className="capitalize">{session.role}</span>
-              </span>
-              <button onClick={signOut} className="hover:text-paper">
-                Log out
-              </button>
-            </div>
+            <div className="mt-2 border-t border-charcoal/[0.06] px-2 pt-4">{account}</div>
           </nav>
         )}
       </header>

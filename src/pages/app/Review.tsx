@@ -55,8 +55,8 @@ export function Review() {
   return (
     <div className="flex min-h-screen flex-col">
       <div className="border-b border-charcoal/10 bg-white px-5 py-5 sm:px-8">
-        <h1 className="font-display text-2xl text-charcoal">Review</h1>
-        <p className="mt-1 text-sm text-charcoal/60">Click anywhere on the frame to leave a note at that exact spot.</p>
+        <h1 className="text-2xl font-bold text-charcoal">Review</h1>
+        <p className="mt-1 text-sm text-charcoal/60">Click the frame to leave a note.</p>
         <div className="mt-4 flex flex-wrap gap-2">
           {[...reviewable, ...(reviewable.some((b) => b.id === activeId) ? [] : briefs.filter((b) => b.id === activeId))].map((b) => (
             <button
@@ -145,7 +145,7 @@ export function Review() {
                 <button
                   onClick={saveDraft}
                   disabled={!note.trim()}
-                  className="rounded-md bg-signal px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
+                  className="rounded-full bg-signal px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
                 >
                   Add note
                 </button>

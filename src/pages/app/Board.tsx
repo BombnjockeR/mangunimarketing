@@ -35,13 +35,13 @@ export function Board() {
     <div className="px-5 py-8 sm:px-8 sm:py-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-2xl text-charcoal">Work board</h1>
-          <p className="mt-1 text-sm text-charcoal/60">Drag a card to update where it stands. Click one to review it.</p>
+          <h1 className="text-2xl font-bold text-charcoal">Board</h1>
+          <p className="mt-1 text-sm text-charcoal/60">Drag a card to move it. Click one to review it.</p>
         </div>
         {isBrand && (
           <button
             onClick={() => setShowNew(true)}
-            className="rounded-md bg-signal px-4 py-2.5 text-sm font-medium text-white hover:bg-signal/90"
+            className="rounded-full bg-signal px-4 py-2.5 text-sm font-medium text-white hover:bg-signal/90"
           >
             Post a brief
           </button>
@@ -164,8 +164,8 @@ function NewBriefModal({
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-lg rounded-xl border border-charcoal/10 bg-white p-6 shadow-2xl"
       >
-        <h2 className="font-display text-xl text-charcoal">Post a brief</h2>
-        <p className="mt-1 text-sm text-charcoal/60">Keep it small and specific. One format, one hook, one target.</p>
+        <h2 className="text-xl font-semibold text-charcoal">Post a brief</h2>
+        <p className="mt-1 text-sm text-charcoal/60">One format, one hook, one target.</p>
 
         <label className="mt-5 block">
           <span className="text-xs text-charcoal/60">Title</span>
@@ -215,12 +215,12 @@ function NewBriefModal({
           />
         </label>
 
-        <div className="mt-6 flex items-center justify-between rounded-md bg-charcoal/[0.04] px-4 py-3">
+        <div className="mt-6 flex items-center justify-between rounded-full bg-charcoal/[0.04] px-4 py-3">
           <div>
             <div className="text-xs text-charcoal/60">Quoted payout</div>
             <div className="text-[11px] text-charcoal/40">Funded from your balance when a creator is matched</div>
           </div>
-          <div className="font-display text-2xl text-charcoal">${quote}</div>
+          <div className="text-2xl font-bold text-charcoal">${quote}</div>
         </div>
 
         <div className="mt-5 flex justify-end gap-3">
@@ -230,7 +230,7 @@ function NewBriefModal({
           <button
             type="submit"
             disabled={!canSubmit}
-            className="rounded-md bg-signal px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
+            className="rounded-full bg-signal px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
           >
             Post brief
           </button>

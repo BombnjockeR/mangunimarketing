@@ -28,8 +28,8 @@ export function Analytics() {
 
   return (
     <div className="px-5 py-8 sm:px-8 sm:py-10">
-      <h1 className="font-display text-2xl text-charcoal">Performance</h1>
-      <p className="mt-1 text-sm text-charcoal/60">Pulled straight from the platform — no screenshots, no waiting.</p>
+      <h1 className="text-2xl font-bold text-charcoal">Results</h1>
+      <p className="mt-1 text-sm text-charcoal/60">Live from Instagram and TikTok.</p>
 
       <div className="mt-6 flex flex-wrap gap-2">
         {perf.map((p) => (
@@ -46,11 +46,11 @@ export function Analytics() {
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-        <div className="rounded-lg border border-charcoal/10 bg-white p-6">
+        <div className="rounded-xl border border-charcoal/[0.06] bg-white p-6">
           <div className="flex items-baseline justify-between">
             <div>
               <div className="text-xs text-charcoal/50">{brief?.title}</div>
-              <div className="font-display text-3xl text-charcoal">{post.views.toLocaleString()} views</div>
+              <div className="text-3xl font-bold text-charcoal">{post.views.toLocaleString()} views</div>
             </div>
             <span className="rounded bg-charcoal/5 px-2 py-1 text-[11px] uppercase text-charcoal/50">
               {post.platform}
@@ -61,8 +61,8 @@ export function Analytics() {
               <AreaChart data={post.history} margin={{ left: 0, right: 8, top: 8 }}>
                 <defs>
                   <linearGradient id="viewsFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#2fd6bd" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#2fd6bd" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#6d4aff" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="#6d4aff" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid stroke="#1b1c221a" vertical={false} />
@@ -72,7 +72,7 @@ export function Analytics() {
                   formatter={(v) => Number(v).toLocaleString()}
                   contentStyle={{ borderRadius: 8, border: "1px solid #1b1c2220", fontSize: 12 }}
                 />
-                <Area type="monotone" dataKey="views" stroke="#1a9c89" strokeWidth={2} fill="url(#viewsFill)" />
+                <Area type="monotone" dataKey="views" stroke="#6d4aff" strokeWidth={2} fill="url(#viewsFill)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -86,7 +86,7 @@ export function Analytics() {
         </div>
       </div>
 
-      <div className="mt-8 rounded-lg border border-charcoal/10 bg-white p-6">
+      <div className="mt-8 rounded-xl border border-charcoal/[0.06] bg-white p-6">
         <div className="text-sm text-charcoal">Views by platform, all active briefs</div>
         <div className="mt-4 h-40">
           <ResponsiveContainer width="100%" height="100%">
@@ -94,7 +94,7 @@ export function Analytics() {
               <XAxis type="number" tickFormatter={money} tick={{ fontSize: 11, fill: "#1b1c2299" }} axisLine={false} tickLine={false} />
               <YAxis type="category" dataKey="platform" tick={{ fontSize: 12, fill: "#1b1c22" }} axisLine={false} tickLine={false} width={70} />
               <Tooltip formatter={(v) => Number(v).toLocaleString()} contentStyle={{ borderRadius: 8, border: "1px solid #1b1c2220", fontSize: 12 }} />
-              <Bar dataKey="views" radius={[0, 4, 4, 0]} fill="#ff3d57" barSize={28} />
+              <Bar dataKey="views" radius={[0, 4, 4, 0]} fill="#6d4aff" barSize={28} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -105,9 +105,9 @@ export function Analytics() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-charcoal/10 bg-white p-5">
+    <div className="rounded-xl border border-charcoal/[0.06] bg-white p-5">
       <div className="text-xs text-charcoal/50">{label}</div>
-      <div className="mt-2 font-display text-xl text-charcoal">{value}</div>
+      <div className="mt-2 text-xl font-semibold text-charcoal">{value}</div>
     </div>
   );
 }

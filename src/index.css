@@ -1,24 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 @theme {
-  /* Manguni design tokens — see /DESIGN.md for the reasoning */
-  --color-ink: #14151f;
-  --color-ink-soft: #1c1e2b;
-  --color-ink-line: #2b2d3d;
-  --color-mist: #a7abc4;
-  --color-paper: #eef0ea;
-  --color-paper-dim: #e3e5dd;
-  --color-charcoal: #1b1c22;
-  --color-signal: #ff3d57;
-  --color-signal-dim: #7a1f2b;
-  --color-aurora: #2fd6bd;
-  --color-aurora-dim: #164a42;
-  --color-gold: #f4b740;
+  /* Manguni tokens — light, one violet accent, Inter throughout */
+  --color-ink: #0f1020;        /* dark surfaces (review frame) */
+  --color-ink-soft: #1c1b33;
+  --color-ink-line: #2a2a45;
+  --color-charcoal: #0f1020;   /* primary text */
+  --color-mist: #6b7080;       /* secondary text */
+  --color-paper: #f6f6fa;      /* app background */
+  --color-paper-dim: #ececf3;
+  --color-signal: #6d4aff;     /* brand violet */
+  --color-signal-dim: #4c2fd6;
+  --color-signal-soft: #efeaff;
+  --color-aurora: #16a35f;     /* success */
+  --color-aurora-dim: #d9f3e6;
+  --color-gold: #d98a06;       /* pending */
 
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-data: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-data: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -28,10 +29,15 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: var(--color-paper);
+  background: white;
   color: var(--color-charcoal);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "cv11", "ss01", "tnum";
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
 }
 
 ::selection {
@@ -53,7 +59,6 @@ body {
   }
 }
 
-/* live-tick counter animation used once in the hero */
 @keyframes tick-in {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }

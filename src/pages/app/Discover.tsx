@@ -28,9 +28,9 @@ function CreatorScorecards() {
 
   return (
     <div className="px-5 py-8 sm:px-8 sm:py-10">
-      <h1 className="font-display text-2xl text-charcoal">Creators</h1>
+      <h1 className="text-2xl font-bold text-charcoal">Creators</h1>
       <p className="mt-1 max-w-xl text-sm text-charcoal/60">
-        Ranked by the median views of their last ten posts. Follower count is shown so you can see how little it predicts.
+        Ranked by views on their last ten posts.
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -53,7 +53,7 @@ function CreatorScorecards() {
 
       {sort === "followers" && (
         <p className="mt-4 rounded-md border border-gold/40 bg-gold/10 px-3 py-2 text-xs text-charcoal/80">
-          Sorting by followers puts the two lowest-performing creators at the top. That's the point.
+          By followers, the two lowest performers come out on top.
         </p>
       )}
 
@@ -86,7 +86,7 @@ function CreatorRow({
 }) {
   const ratio = c.medianViews / c.followers;
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-4 rounded-lg border border-charcoal/10 bg-white p-4 sm:grid-cols-[auto_1.4fr_1fr_1fr_auto] sm:items-center">
+    <div className="grid grid-cols-[auto_1fr] gap-4 rounded-xl border border-charcoal/[0.06] bg-white p-4 sm:grid-cols-[auto_1.4fr_1fr_1fr_auto] sm:items-center">
       <div className="flex items-center gap-3">
         <span className="w-5 font-data text-xs text-charcoal/40">{rank}</span>
         <span className="text-2xl leading-none">{c.avatar}</span>
@@ -101,7 +101,7 @@ function CreatorRow({
       <div className="col-span-2 grid grid-cols-2 gap-3 sm:col-span-1 sm:grid-cols-1 sm:gap-1">
         <div>
           <div className="text-[11px] text-charcoal/50">Median views, last 10</div>
-          <div className="font-display text-lg text-charcoal">{formatCompact(c.medianViews)}</div>
+          <div className="text-lg font-semibold text-charcoal">{formatCompact(c.medianViews)}</div>
         </div>
         <div>
           <div className="text-[11px] text-charcoal/50">Followers</div>
@@ -146,7 +146,7 @@ function Sparkline({ values }: { values: number[] }) {
   const pts = values.map((v, i) => `${(i / (values.length - 1)) * w},${h - (v / max) * (h - 4) - 2}`).join(" ");
   return (
     <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden className="block">
-      <polyline points={pts} fill="none" stroke="#1a9c89" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
+      <polyline points={pts} fill="none" stroke="#6d4aff" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
     </svg>
   );
 }
@@ -171,16 +171,16 @@ function OpenBriefs() {
 
   return (
     <div className="px-5 py-8 sm:px-8 sm:py-10">
-      <h1 className="font-display text-2xl text-charcoal">Open briefs</h1>
+      <h1 className="text-2xl font-bold text-charcoal">Open briefs</h1>
       <p className="mt-1 max-w-xl text-sm text-charcoal/60">
-        Every brief here is already funded. The payout is fixed by the view band it's aiming for — apply if you can hit it.
+        Already funded. Payout is fixed by the target views.
       </p>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {openBriefs.map((b) => {
           const isApplied = applied.has(b.id);
           return (
-            <div key={b.id} className="flex flex-col rounded-lg border border-charcoal/10 bg-white p-5">
+            <div key={b.id} className="flex flex-col rounded-xl border border-charcoal/[0.06] bg-white p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="text-sm text-charcoal">{b.title}</div>
@@ -189,7 +189,7 @@ function OpenBriefs() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-display text-lg text-charcoal">${b.payout}</div>
+                  <div className="text-lg font-semibold text-charcoal">${b.payout}</div>
                   <div className="text-[11px] text-aurora">Funded</div>
                 </div>
               </div>
