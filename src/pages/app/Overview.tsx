@@ -10,15 +10,14 @@ function money(n: number) {
 export function Overview() {
   const { session } = useSession();
   const isBrand = session?.role === "brand";
-  const mine = isBrand
-    ? briefs.filter((b) => b.brand === session?.name || true)
-    : briefs.filter((b) => b.creator === session?.name || true);
+  // Mock data isn't tied to the typed-in name, so show the whole workspace.
+  const mine = briefs;
 
   const active = mine.filter((b) => b.status !== "done");
   const dueSoon = [...mine].sort((a, b) => a.dueDate.localeCompare(b.dueDate)).slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-10">
+    <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-10">
       <h1 className="font-display text-2xl text-charcoal">
         {isBrand ? `Welcome back, ${session?.name}` : `Hi ${session?.name}`}
       </h1>

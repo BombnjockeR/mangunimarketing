@@ -289,6 +289,66 @@ export const walletBalance = {
   creator: { lifetimeEarned: 4260, availableNow: 225, pendingReview: 600 },
 };
 
+// ---------------------------------------------------------------------------
+// Creator scorecards. Ranked by *median views on the last 10 posts*, not by
+// follower count — follower count is kept only so the gap between the two
+// numbers is visible.
+// ---------------------------------------------------------------------------
+
+export type ViewBand = "10k" | "50k" | "100k" | "250k" | "500k";
+
+export interface Creator {
+  id: string;
+  name: string;
+  handle: string;
+  platform: "instagram" | "tiktok";
+  niche: string;
+  followers: number;
+  medianViews: number; // last 10 posts
+  retention: number; // % watched through, avg
+  onTimeRate: number; // % deliverables on or before due date
+  briefsCompleted: number;
+  recentViews: number[]; // sparkline, last 10 posts
+  avatar: string; // emoji stand-in
+}
+
+export const creators: Creator[] = [
+  { id: "c1", name: "Fajar Nugroho", handle: "@fajarnugroho", platform: "tiktok", niche: "Tech & apps", followers: 8400, medianViews: 268000, retention: 79, onTimeRate: 100, briefsCompleted: 12, recentViews: [190, 412, 240, 268, 310, 205, 255, 290, 268, 330], avatar: "🧑🏽‍💻" },
+  { id: "c2", name: "Amelia Wong", handle: "@ameliaruns", platform: "tiktok", niche: "Fitness & running", followers: 61000, medianViews: 142000, retention: 74, onTimeRate: 92, briefsCompleted: 9, recentViews: [98, 160, 120, 268, 142, 130, 175, 110, 150, 142], avatar: "🏃🏻‍♀️" },
+  { id: "c3", name: "Nadia Putri", handle: "@nadiaputri", platform: "instagram", niche: "Beauty & home", followers: 24000, medianViews: 96000, retention: 71, onTimeRate: 100, briefsCompleted: 15, recentViews: [60, 184, 91, 88, 120, 96, 75, 110, 92, 104], avatar: "💄" },
+  { id: "c4", name: "Rizky Ramadhan", handle: "@rizkymakescoffee", platform: "instagram", niche: "Food & drink", followers: 310000, medianViews: 48000, retention: 55, onTimeRate: 78, briefsCompleted: 6, recentViews: [56, 40, 52, 35, 48, 61, 44, 38, 50, 47], avatar: "☕️" },
+  { id: "c5", name: "Dewi Lestari", handle: "@dewi.lestari", platform: "tiktok", niche: "Parenting", followers: 4200, medianViews: 73000, retention: 82, onTimeRate: 100, briefsCompleted: 4, recentViews: [22, 68, 90, 73, 115, 64, 80, 71, 95, 73], avatar: "👩🏽‍🍼" },
+  { id: "c6", name: "Kevin Tan", handle: "@kevintan.mv", platform: "instagram", niche: "Travel", followers: 480000, medianViews: 31000, retention: 41, onTimeRate: 60, briefsCompleted: 3, recentViews: [30, 25, 41, 28, 33, 29, 35, 27, 31, 30], avatar: "🧳" },
+];
+
+// Open briefs a creator can apply to (brand side has already funded these).
+export interface OpenBrief {
+  id: string;
+  title: string;
+  brand: string;
+  platform: "instagram" | "tiktok";
+  viewBand: ViewBand;
+  payout: number;
+  dueDate: string;
+  applicants: number;
+  summary: string;
+}
+
+export const openBriefs: OpenBrief[] = [
+  { id: "ob1", title: "15s hook test — Aurora SPF", brand: "Aurora Skincare", platform: "tiktok", viewBand: "100k", payout: 520, dueDate: "2026-10-02", applicants: 4, summary: "Three different first-2-second hooks for the same SPF routine. We keep the one that performs." },
+  { id: "ob2", title: "Reel — Kopi Senja new outlet opening", brand: "Kopi Senja", platform: "instagram", viewBand: "50k", payout: 260, dueDate: "2026-09-30", applicants: 7, summary: "Walk-in, order, first sip. Real reactions, no script." },
+  { id: "ob3", title: "TikTok — Warung Digital seller story", brand: "Warung Digital", platform: "tiktok", viewBand: "250k", payout: 1100, dueDate: "2026-10-08", applicants: 2, summary: "Follow one small seller for a day using the app. Documentary tone." },
+  { id: "ob4", title: "Reel — Studio Alun rental makeover", brand: "Studio Alun", platform: "instagram", viewBand: "10k", payout: 140, dueDate: "2026-09-29", applicants: 11, summary: "Rental-friendly makeover of one corner, under $50 in product." },
+];
+
+export const viewBandLabel: Record<ViewBand, string> = {
+  "10k": "10K+ views",
+  "50k": "50K+ views",
+  "100k": "100K+ views",
+  "250k": "250K+ views",
+  "500k": "500K+ views",
+};
+
 export const statusLabel: Record<BriefStatus, string> = {
   todo: "To do",
   in_progress: "In progress",

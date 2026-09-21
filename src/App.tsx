@@ -7,6 +7,7 @@ import { Board } from "./pages/app/Board";
 import { Review } from "./pages/app/Review";
 import { Analytics } from "./pages/app/Analytics";
 import { Payments } from "./pages/app/Payments";
+import { Discover } from "./pages/app/Discover";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/app" element={<AppLayout />}>
         <Route index element={<Overview />} />
+        <Route path="discover" element={<Discover />} />
         <Route path="board" element={<Board />} />
         <Route path="review" element={<Review />} />
         <Route path="analytics" element={<Analytics />} />

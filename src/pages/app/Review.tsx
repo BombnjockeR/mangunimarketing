@@ -1,13 +1,18 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { briefs, pins as initialPins, type Pin } from "../../lib/mockData";
 import { useSession } from "../../lib/session";
 import clsx from "clsx";
 
-const reviewable = briefs.filter((b) => b.status === "in_review" || b.status === "in_progress");
+const reviewable = briefs.filter((b) => b.status !== "todo");
 
 export function Review() {
   const { session } = useSession();
-  const [activeId, setActiveId] = useState(reviewable[0]?.id ?? briefs[0].id);
+  const [params] = useSearchParams();
+  const requested = params.get("brief");
+  const [activeId, setActiveId] = useState(
+    requested && briefs.some((b) => b.id === requested) ? requested : (reviewable[0]?.id ?? briefs[0].id)
+  );
   const [pinsByBrief, setPinsByBrief] = useState<Record<string, Pin[]>>(initialPins);
   const [draft, setDraft] = useState<{ x: number; y: number } | null>(null);
   const [note, setNote] = useState("");
@@ -48,12 +53,12 @@ export function Review() {
   }
 
   return (
-    <div className="flex h-screen flex-col">
-      <div className="border-b border-charcoal/10 bg-white px-8 py-5">
+    <div className="flex min-h-screen flex-col">
+      <div className="border-b border-charcoal/10 bg-white px-5 py-5 sm:px-8">
         <h1 className="font-display text-2xl text-charcoal">Review</h1>
         <p className="mt-1 text-sm text-charcoal/60">Click anywhere on the frame to leave a note at that exact spot.</p>
         <div className="mt-4 flex flex-wrap gap-2">
-          {reviewable.map((b) => (
+          {[...reviewable, ...(reviewable.some((b) => b.id === activeId) ? [] : briefs.filter((b) => b.id === activeId))].map((b) => (
             <button
               key={b.id}
               onClick={() => {
@@ -71,8 +76,8 @@ export function Review() {
         </div>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        <div className="flex flex-1 items-center justify-center bg-charcoal/5 p-8">
+      <div className="flex flex-1 flex-col lg:flex-row">
+        <div className="flex flex-1 items-center justify-center bg-charcoal/5 p-5 sm:p-8">
           <div
             onClick={handleCanvasClick}
             className="relative aspect-9/16 w-full max-w-sm cursor-crosshair overflow-hidden rounded-xl border border-charcoal/15 bg-gradient-to-br from-ink via-ink-soft to-signal-dim shadow-lg"
@@ -111,7 +116,17 @@ export function Review() {
           </div>
         </div>
 
-        <aside className="w-80 shrink-0 overflow-y-auto border-l border-charcoal/10 bg-white p-5">
+        <aside className="w-full shrink-0 border-t border-charcoal/10 bg-white p-5 lg:w-80 lg:border-l lg:border-t-0">
+          <div className="mb-5 rounded-lg bg-charcoal/[0.04] p-3">
+            <div className="text-xs font-medium text-charcoal">The brief</div>
+            <p className="mt-1 text-sm leading-relaxed text-charcoal/70">{brief.brief}</p>
+            <div className="mt-2 flex flex-wrap gap-x-3 text-[11px] text-charcoal/50">
+              <span>{brief.brand}</span>
+              <span>{brief.creator}</span>
+              <span>Due {brief.dueDate}</span>
+            </div>
+          </div>
+
           {draft && (
             <div className="mb-5 rounded-lg border border-signal/40 bg-signal/5 p-3">
               <div className="text-xs font-medium text-charcoal">New note at this spot</div>

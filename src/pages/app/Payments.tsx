@@ -41,7 +41,7 @@ export function Payments() {
   const creatorAvailable = walletBalance.creator.availableNow + (withdrawn ? 0 : 0);
 
   return (
-    <div className="px-8 py-10">
+    <div className="px-5 py-8 sm:px-8 sm:py-10">
       <h1 className="font-display text-2xl text-charcoal">Payments</h1>
       <p className="mt-1 text-sm text-charcoal/60">
         {isBrand
@@ -90,8 +90,8 @@ export function Payments() {
 
       <div className="mt-10">
         <div className="text-sm font-medium text-charcoal">Transaction history</div>
-        <div className="mt-3 overflow-hidden rounded-lg border border-charcoal/10 bg-white">
-          <table className="w-full text-left text-sm">
+        <div className="mt-3 overflow-x-auto rounded-lg border border-charcoal/10 bg-white">
+          <table className="w-full min-w-[640px] text-left text-sm">
             <thead>
               <tr className="border-b border-charcoal/10 text-xs uppercase tracking-wide text-charcoal/40">
                 <th className="px-4 py-3 font-medium">Milestone</th>

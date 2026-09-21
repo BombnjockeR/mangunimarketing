@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import { LiveFeedWall } from "../../components/LiveFeedWall";
-import { hero, trustBar, painPoints, features, paymentStory, finalCta } from "../../lib/content";
+import { hero, trustBar, painPoints, features, forCreators, paymentStory, finalCta } from "../../lib/content";
 
 export function Home() {
   return (
@@ -71,6 +71,32 @@ export function Home() {
                 <p className="mt-2 text-sm leading-relaxed text-mist">{f.body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* For creators */}
+      <section id="creators" className="border-t border-ink-line/60 bg-ink py-20">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <h2 className="font-display text-3xl leading-tight text-paper">{forCreators.heading}</h2>
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-mist">{forCreators.sub}</p>
+              <Link
+                to="/login"
+                className="mt-8 inline-block rounded-md border border-mist/40 px-5 py-3 text-sm font-medium text-paper hover:border-paper"
+              >
+                See open briefs
+              </Link>
+            </div>
+            <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2">
+              {forCreators.points.map((p) => (
+                <div key={p.title} className="border-t border-ink-line pt-4">
+                  <h3 className="font-display text-base text-paper">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-mist">{p.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

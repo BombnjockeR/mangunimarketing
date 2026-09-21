@@ -59,6 +59,29 @@ export const features = [
   },
 ];
 
+export const forCreators = {
+  heading: "If you're the one making the content",
+  sub: "You don't need a big following to get picked here. You need posts that get watched.",
+  points: [
+    {
+      title: "Ranked on your last ten posts, not your follower count",
+      body: "Brands see your median views, retention and on-time rate first. A 4,000-follower account with real reach outranks a 400,000-follower one that doesn't.",
+    },
+    {
+      title: "Every brief is funded before you see it",
+      body: "The money is already in escrow when a brief goes live. You're never chasing an invoice, and the rate is fixed by the view band — no haggling.",
+    },
+    {
+      title: "Paid the moment the work is approved",
+      body: "Approval releases your share instantly. Withdraw same-day, not on the brand's next payment run.",
+    },
+    {
+      title: "Feedback you can act on",
+      body: "Notes are pinned to the exact frame, with the brief right next to them. No more decoding \"make it pop\" from a voice note.",
+    },
+  ],
+};
+
 export const paymentStory = {
   heading: "The payment problem, actually solved",
   body: "Brands can't wire money to hundreds of creators one at a time — that's a finance-team constraint, not a choice. Creators shouldn't have to absorb a 30–60 day wait because of it. Manguni separates the two: your team funds one pooled balance on your schedule, and Manguni releases each creator's cut the moment their milestone is approved. You get one clean transfer to reconcile. They get paid same-day.",

@@ -15,6 +15,7 @@ export function Navbar() {
           <a href="/#product" className="hover:text-paper">Product</a>
           <a href="/#payment" className="hover:text-paper">Payments</a>
           <a href="/#features" className="hover:text-paper">Features</a>
+          <a href="/#creators" className="hover:text-paper">For creators</a>
         </nav>
         <div className="flex items-center gap-3">
           {session ? (
