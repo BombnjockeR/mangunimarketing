@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* Manguni design tokens — see /DESIGN.md for the reasoning */
+  --color-ink: #14151f;
+  --color-ink-soft: #1c1e2b;
+  --color-ink-line: #2b2d3d;
+  --color-mist: #a7abc4;
+  --color-paper: #eef0ea;
+  --color-paper-dim: #e3e5dd;
+  --color-charcoal: #1b1c22;
+  --color-signal: #ff3d57;
+  --color-signal-dim: #7a1f2b;
+  --color-aurora: #2fd6bd;
+  --color-aurora-dim: #164a42;
+  --color-gold: #f4b740;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-paper);
+  color: var(--color-charcoal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* live-tick counter animation used once in the hero */
+@keyframes tick-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tick-in {
+  animation: tick-in 0.5s ease-out both;
+}
