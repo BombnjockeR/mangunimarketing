@@ -47,8 +47,8 @@ export function Overview() {
         <div>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-charcoal">Coming up</h2>
-            <Link to="/app/board" className="text-sm text-signal hover:underline">
-              View board
+            <Link to={isBrand ? "/app/campaigns" : "/app/board"} className="text-sm text-signal hover:underline">
+              {isBrand ? "View campaigns" : "View board"}
             </Link>
           </div>
           <ul className="mt-4 divide-y divide-charcoal/10 rounded-xl border border-charcoal/[0.06] bg-white">

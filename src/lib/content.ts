@@ -2,7 +2,20 @@
 
 export const hero = {
   headline: "Pay for views, not followers.",
-  sub: "Brief creators, review their work, and pay them the moment it's approved — all in one place.",
+  sub: "Creator content for your campaigns — briefed, approved, and boosted as ads, from one place.",
+};
+
+// Fixed prices by target views. Answers "how much?" before anyone asks.
+export const pricing = {
+  heading: "Simple pricing. Fixed by target views.",
+  sub: "Paid usage rights included, so the winners can run as ads from your own account.",
+  tiers: [
+    { views: "10K+", price: "$170" },
+    { views: "50K+", price: "$360" },
+    { views: "100K+", price: "$670" },
+    { views: "250K+", price: "$1,470" },
+  ],
+  note: "Typical result: $3–5 CPM vs. $9+ on paid social.",
 };
 
 export const roles = {
@@ -31,8 +44,8 @@ export const features = [
   },
   {
     icon: "bolt",
-    title: "Get paid instantly",
-    body: "Brands fund once. Creators are paid the moment work is approved.",
+    title: "Boost what works",
+    body: "See cost per view next to your paid ads. Put budget behind the winners.",
   },
 ] as const;
 

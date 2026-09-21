@@ -81,3 +81,39 @@ Direct, a little contrarian, no hustle-bro energy. Say the quiet thing
 to both audiences without picking a side — brand copy leans operational,
 creator copy leans respectful of their time and money. Avoid marketing
 clichés ("supercharge," "unlock," "revolutionize").
+
+---
+
+## CMO review of the prototype (21 Sep 2026)
+
+**What holds up.** The positioning is sharp and defensible. Creator
+scorecards ranked by median views make the thesis tangible. Pin-based review
+and instant payout each remove a real, daily friction. The UI is simple
+enough for a first-time user.
+
+**Where it fell short for a marketing team, and what changed:**
+
+| Gap | Why a CMO cares | Fix shipped |
+|---|---|---|
+| Creator-collab tool, not a marketing platform | Marketing budgets live in paid media; creator posts matter as *ad creative* (Spark Ads / Partnership Ads) | "Boost as ad" on any post with paid rights; boosted spend/views/clicks roll into results |
+| Views without cost is still vanity | The only number that survives a budget meeting is cost per outcome | Results leads with Spend, effective CPM, CPC — side by side with the brand's paid-social benchmark, plus "saved vs paid" |
+| No campaign layer | Teams budget, pace and report by campaign, not by post | Campaigns page: budget pacing, views vs target, CPM, clicks, conversions, boost spend, per-brief status |
+| Testing not operationalized | The thesis implies test-then-scale | Hook test card: variants compared on views/retention/clicks, winner flagged, one-click boost |
+| No usage rights | Legal asks on day one; rights decide whether a post can become an ad | Rights chosen in the brief, priced into the quote (×1.4 / ×1.9), shown on cards and in Review; posts without paid rights can't be boosted |
+| Approval and payment disconnected | Approval *is* the payment trigger | "Approve & pay" lives in Review and is gated on open notes being resolved |
+| Numbers stuck in the app | Marketing lives in decks | CSV export of every post with spend and CPM |
+| Homepage silent on price | "Pay for views" invites "how much?" | Fixed price tiers by target views, rights included, with the CPM comparison |
+
+**Still missing for a production version (in priority order):**
+
+1. Ad-account connections (Meta, TikTok) so the paid benchmark and boost
+   results are real, not seeded — this makes the CPM comparison credible.
+2. Attribution: tracked links / promo codes per post, feeding conversions.
+3. Approval chains: content approval vs. spend approval above a threshold,
+   with legal/brand-safety sign-off as an optional step.
+4. Creative library: approved posts with rights and expiry dates, searchable
+   by hook / product / performance, so the ads team can pull creative
+   without asking.
+5. Consolidated monthly invoice for finance — the operational selling point
+   behind the "fund once" story.
+6. Disclosure compliance (#ad) checks and platform policy flags before boost.

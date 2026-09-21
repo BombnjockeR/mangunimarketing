@@ -4,11 +4,14 @@ import clsx from "clsx";
 import { useSession } from "../../lib/session";
 import {
   briefs as initialBriefs,
+  campaigns,
   statusLabel,
   viewBandLabel,
+  rightsLabel,
   type Brief,
   type BriefStatus,
   type ViewBand,
+  type Rights,
 } from "../../lib/mockData";
 import { quoteBrief, type Format } from "../../lib/quote";
 
@@ -94,7 +97,9 @@ export function Board() {
                       </span>
                     </div>
                     <div className="mt-2 text-sm text-charcoal">{b.title}</div>
-                    <div className="mt-1 text-xs text-charcoal/50">{b.creator}</div>
+                    <div className="mt-1 text-xs text-charcoal/50">
+                      {b.creator} · {rightsLabel[b.rights]}
+                    </div>
                     <div className="mt-2 flex items-center justify-between text-xs text-charcoal/50">
                       <span>Due {b.dueDate}</span>
                       <span className="font-data">${b.payout}</span>
@@ -133,9 +138,11 @@ function NewBriefModal({
   const [platform, setPlatform] = useState<"tiktok" | "instagram">("tiktok");
   const [format, setFormat] = useState<Format>("15s");
   const [band, setBand] = useState<ViewBand>("50k");
+  const [rights, setRights] = useState<Rights>("paid_90");
+  const [campaignId, setCampaignId] = useState(campaigns.find((c) => c.status === "live")?.id ?? campaigns[0].id);
   const [hook, setHook] = useState("");
   const [dueDate, setDueDate] = useState("2026-10-05");
-  const quote = quoteBrief(band, format);
+  const quote = quoteBrief(band, format, rights);
   const canSubmit = title.trim().length > 0;
 
   function submit(e: React.FormEvent) {
@@ -143,6 +150,8 @@ function NewBriefModal({
     if (!canSubmit) return;
     onCreate({
       id: `b${Date.now()}`,
+      campaignId,
+      rights,
       title: title.trim(),
       brand,
       creator: "Open — matching creators",
@@ -194,6 +203,30 @@ function NewBriefModal({
             options={(Object.keys(viewBandLabel) as ViewBand[]).map((k) => [k, viewBandLabel[k].replace(" views", "")])}
           />
         </Field>
+
+        <Field label="Usage rights" className="mt-4">
+          <Options
+            value={rights}
+            onChange={setRights}
+            options={(Object.keys(rightsLabel) as Rights[]).map((k) => [k, rightsLabel[k]])}
+          />
+          <p className="mt-1.5 text-[11px] text-charcoal/50">Paid rights let you run the post as an ad from your own account.</p>
+        </Field>
+
+        <label className="mt-4 block">
+          <span className="text-xs text-charcoal/60">Campaign</span>
+          <select
+            value={campaignId}
+            onChange={(e) => setCampaignId(e.target.value)}
+            className="mt-1 w-full rounded-md border border-charcoal/15 bg-white px-3 py-2 text-sm focus:border-signal focus:outline-none"
+          >
+            {campaigns.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </label>
 
         <label className="mt-4 block">
           <span className="text-xs text-charcoal/60">The hook (first 2 seconds)</span>

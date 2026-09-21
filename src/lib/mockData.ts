@@ -6,8 +6,18 @@ export type Role = "brand" | "creator";
 
 export type BriefStatus = "todo" | "in_progress" | "in_review" | "done";
 
+// Usage rights travel with the brief and are priced into the quote.
+export type Rights = "organic" | "paid_90" | "paid_365";
+
+export const rightsLabel: Record<Rights, string> = {
+  organic: "Organic only",
+  paid_90: "Paid usage · 90 days",
+  paid_365: "Paid usage · 1 year",
+};
+
 export interface Brief {
   id: string;
+  campaignId: string;
   title: string;
   brand: string;
   creator: string;
@@ -15,9 +25,30 @@ export interface Brief {
   status: BriefStatus;
   dueDate: string;
   payout: number; // USD, cents-free for mock simplicity
+  rights: Rights;
   thumbnail: string; // emoji stand-in for artwork
   brief: string;
 }
+
+// A campaign is what a marketing team actually budgets and reports on.
+export interface Campaign {
+  id: string;
+  name: string;
+  goal: string;
+  budget: number;
+  targetViews: number;
+  startDate: string;
+  endDate: string;
+  status: "live" | "planning" | "done";
+}
+
+export const campaigns: Campaign[] = [
+  { id: "cp1", name: "Aurora SPF launch", goal: "Awareness for the new SPF 50 before summer", budget: 6000, targetViews: 1_200_000, startDate: "2026-09-08", endDate: "2026-10-10", status: "live" },
+  { id: "cp2", name: "Kopi Senja outlet openings", goal: "Foot traffic to two new outlets", budget: 2500, targetViews: 300_000, startDate: "2026-09-10", endDate: "2026-10-01", status: "live" },
+  { id: "cp3", name: "Warung Digital seller stories", goal: "Seller sign-ups from the app walkthrough", budget: 4000, targetViews: 900_000, startDate: "2026-09-01", endDate: "2026-10-15", status: "live" },
+  { id: "cp5", name: "Studio Alun autumn styling", goal: "Drive saves and profile visits for the autumn collection", budget: 1200, targetViews: 150_000, startDate: "2026-09-05", endDate: "2026-09-20", status: "done" },
+  { id: "cp4", name: "Bela treadmill Q4", goal: "Pre-orders for the treadmill drop", budget: 3000, targetViews: 500_000, startDate: "2026-10-01", endDate: "2026-11-15", status: "planning" },
+];
 
 export interface Pin {
   id: string;
@@ -39,8 +70,36 @@ export interface PostPerformance {
   comments: number;
   shares: number;
   retention: number; // percent watched through
+  clicks: number; // tracked link clicks
+  conversions: number; // attributed via link / promo code
+  boosted?: { spend: number; views: number; clicks: number }; // paid amplification (Spark / Partnership Ads)
   history: { day: string; views: number }[];
 }
+
+// What the brand pays for the same reach on paid social. Used only for the
+// side-by-side on Results; a real build pulls this from the ad accounts.
+export const paidBenchmark = { cpm: 9.4, cpc: 0.62 };
+
+// A hook test: the same brief shot with different first-two-seconds.
+export interface HookTest {
+  id: string;
+  campaignId: string;
+  briefTitle: string;
+  variants: { label: string; hook: string; views: number; retention: number; clicks: number }[];
+}
+
+export const hookTests: HookTest[] = [
+  {
+    id: "ht1",
+    campaignId: "cp1",
+    briefTitle: "Aurora SPF — 15s hook test",
+    variants: [
+      { label: "A", hook: "Open on the texture", views: 88_400, retention: 74, clicks: 1_210 },
+      { label: "B", hook: "\"I stopped using sunscreen because…\"", views: 214_900, retention: 81, clicks: 3_860 },
+      { label: "C", hook: "Unboxing, box first", views: 41_200, retention: 52, clicks: 390 },
+    ],
+  },
+];
 
 export interface Transaction {
   id: string;
@@ -55,6 +114,7 @@ export interface Transaction {
 export const briefs: Brief[] = [
   {
     id: "b1",
+    campaignId: "cp1",
     title: "Unboxing — Aurora Skincare set",
     brand: "Aurora Skincare",
     creator: "Nadia Putri",
@@ -62,11 +122,13 @@ export const briefs: Brief[] = [
     status: "in_review",
     dueDate: "2026-09-24",
     payout: 450,
+    rights: "paid_90",
     thumbnail: "🧴",
     brief: "15s vertical unboxing, hook in first 2s, show texture on skin, end on the 3-step routine card.",
   },
   {
     id: "b2",
+    campaignId: "cp2",
     title: "Reel — Kopi Senja cold brew, café-hop edit",
     brand: "Kopi Senja",
     creator: "Rizky Ramadhan",
@@ -74,11 +136,13 @@ export const briefs: Brief[] = [
     status: "in_progress",
     dueDate: "2026-09-23",
     payout: 300,
+    rights: "organic",
     thumbnail: "☕️",
     brief: "30s café-hop montage, natural light only, no on-screen text over the pour shot.",
   },
   {
     id: "b3",
+    campaignId: "cp4",
     title: "TikTok — Bela Running Co. treadmill test",
     brand: "Bela Running Co.",
     creator: "Amelia Wong",
@@ -86,11 +150,13 @@ export const briefs: Brief[] = [
     status: "todo",
     dueDate: "2026-09-28",
     payout: 600,
+    rights: "paid_365",
     thumbnail: "👟",
     brief: "Honest first-run review, include a full-speed clip and a cooldown clip, mention the arch support.",
   },
   {
     id: "b4",
+    campaignId: "cp5",
     title: "Reel — Studio Alun home décor styling",
     brand: "Studio Alun",
     creator: "Nadia Putri",
@@ -98,11 +164,13 @@ export const briefs: Brief[] = [
     status: "done",
     dueDate: "2026-09-18",
     payout: 380,
+    rights: "organic",
     thumbnail: "🪴",
     brief: "Before/after styling of one corner, warm tone grade, caption should ask a question.",
   },
   {
     id: "b5",
+    campaignId: "cp3",
     title: "TikTok — Warung Digital app walkthrough",
     brand: "Warung Digital",
     creator: "Fajar Nugroho",
@@ -110,11 +178,13 @@ export const briefs: Brief[] = [
     status: "in_progress",
     dueDate: "2026-09-25",
     payout: 250,
+    rights: "paid_90",
     thumbnail: "📱",
     brief: "Screen-record checkout flow, voiceover in Bahasa, keep it under 40s.",
   },
   {
     id: "b6",
+    campaignId: "cp1",
     title: "Reel — Aurora Skincare SPF launch",
     brand: "Aurora Skincare",
     creator: "Amelia Wong",
@@ -122,6 +192,7 @@ export const briefs: Brief[] = [
     status: "todo",
     dueDate: "2026-10-01",
     payout: 500,
+    rights: "paid_90",
     thumbnail: "☀️",
     brief: "Morning routine framing, SPF applied last, outdoor daylight shot to close.",
   },
@@ -170,6 +241,8 @@ export const performance: PostPerformance[] = [
     comments: 340,
     shares: 890,
     retention: 71,
+    clicks: 2140,
+    conversions: 96,
     history: [
       { day: "Day 1", views: 42000 },
       { day: "Day 2", views: 91000 },
@@ -189,6 +262,8 @@ export const performance: PostPerformance[] = [
     comments: 88,
     shares: 210,
     retention: 58,
+    clicks: 610,
+    conversions: 22,
     history: [
       { day: "Day 1", views: 9000 },
       { day: "Day 2", views: 21000 },
@@ -208,6 +283,9 @@ export const performance: PostPerformance[] = [
     comments: 1200,
     shares: 5400,
     retention: 82,
+    clicks: 6900,
+    conversions: 412,
+    boosted: { spend: 800, views: 265000, clicks: 4100 },
     history: [
       { day: "Day 1", views: 88000 },
       { day: "Day 2", views: 176000 },
@@ -227,6 +305,8 @@ export const performance: PostPerformance[] = [
     comments: 210,
     shares: 460,
     retention: 64,
+    clicks: 980,
+    conversions: 31,
     history: [
       { day: "Day 1", views: 18000 },
       { day: "Day 2", views: 38000 },
@@ -246,6 +326,8 @@ export const performance: PostPerformance[] = [
     comments: 52,
     shares: 90,
     retention: 49,
+    clicks: 240,
+    conversions: 6,
     history: [
       { day: "Day 1", views: 4000 },
       { day: "Day 2", views: 9500 },
@@ -265,6 +347,8 @@ export const performance: PostPerformance[] = [
     comments: 780,
     shares: 3100,
     retention: 76,
+    clicks: 3300,
+    conversions: 145,
     history: [
       { day: "Day 1", views: 52000 },
       { day: "Day 2", views: 108000 },

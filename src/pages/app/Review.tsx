@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { briefs, pins as initialPins, type Pin } from "../../lib/mockData";
+import { briefs, pins as initialPins, rightsLabel, type Pin } from "../../lib/mockData";
 import { useSession } from "../../lib/session";
 import clsx from "clsx";
 
@@ -19,6 +19,16 @@ export function Review() {
 
   const brief = briefs.find((b) => b.id === activeId)!;
   const pins = pinsByBrief[activeId] ?? [];
+  const openCount = pins.filter((p) => !p.resolved).length;
+  const [approved, setApproved] = useState<Set<string>>(new Set());
+  const [toast, setToast] = useState<string | null>(null);
+  const isBrand = session?.role === "brand";
+
+  function approveAndPay() {
+    setApproved((s) => new Set(s).add(activeId));
+    setToast(`Approved — $${brief.payout} released to ${brief.creator} instantly.`);
+    setTimeout(() => setToast(null), 3500);
+  }
 
   function handleCanvasClick(e: React.MouseEvent<HTMLDivElement>) {
     if (draft) return; // finish or cancel the open draft first
@@ -124,8 +134,30 @@ export function Review() {
               <span>{brief.brand}</span>
               <span>{brief.creator}</span>
               <span>Due {brief.dueDate}</span>
+              <span>{rightsLabel[brief.rights]}</span>
             </div>
           </div>
+
+          {isBrand && (
+            <div className="mb-5">
+              {approved.has(activeId) ? (
+                <div className="rounded-lg bg-aurora-dim px-3 py-2.5 text-sm font-medium text-aurora">Approved · ${brief.payout} paid</div>
+              ) : (
+                <>
+                  <button
+                    onClick={approveAndPay}
+                    disabled={openCount > 0}
+                    className="w-full rounded-full bg-signal py-2.5 text-sm font-medium text-white hover:bg-signal/90 disabled:opacity-40"
+                  >
+                    Approve &amp; pay ${brief.payout}
+                  </button>
+                  <p className="mt-1.5 text-center text-[11px] text-charcoal/50">
+                    {openCount > 0 ? `${openCount} open note${openCount > 1 ? "s" : ""} to resolve first` : "Releases payment the moment you approve"}
+                  </p>
+                </>
+              )}
+            </div>
+          )}
 
           {draft && (
             <div className="mb-5 rounded-lg border border-signal/40 bg-signal/5 p-3">
@@ -174,6 +206,7 @@ export function Review() {
           </ul>
         </aside>
       </div>
+      {toast && <div className="fixed bottom-6 right-6 z-40 rounded-xl bg-charcoal px-4 py-3 text-sm text-white shadow-lg">{toast}</div>}
     </div>
   );
 }

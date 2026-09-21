@@ -13,11 +13,12 @@ export function AppLayout() {
 
   const nav = [
     { to: "/app", label: "Home", icon: Icon.home, end: true },
+    ...(session.role === "brand" ? [{ to: "/app/campaigns", label: "Campaigns", icon: Icon.briefcase }] : []),
     { to: "/app/discover", label: session.role === "brand" ? "Creators" : "Briefs", icon: Icon.users },
     { to: "/app/board", label: "Board", icon: Icon.board },
     { to: "/app/review", label: "Review", icon: Icon.pin },
     { to: "/app/analytics", label: "Results", icon: Icon.chart },
-    { to: "/app/payments", label: "Payments", icon: Icon.wallet },
+    { to: "/app/payments", label: session.role === "brand" ? "Budget" : "Payments", icon: Icon.wallet },
   ];
 
   function signOut() {

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import { Icon } from "../../components/Icons";
-import { hero, roles, features, finalCta } from "../../lib/content";
+import { hero, roles, features, pricing, finalCta } from "../../lib/content";
 
 export function Home() {
   return (
@@ -53,8 +53,26 @@ export function Home() {
         </div>
       </section>
 
+      {/* Pricing */}
+      <section className="bg-paper py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 text-center sm:px-8">
+          <h2 className="text-3xl font-bold sm:text-4xl">{pricing.heading}</h2>
+          <p className="mx-auto mt-3 max-w-md text-mist">{pricing.sub}</p>
+          <div className="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
+            {pricing.tiers.map((t) => (
+              <div key={t.views} className="rounded-2xl bg-white p-6 shadow-sm">
+                <div className="text-sm text-mist">{t.views} views</div>
+                <div className="mt-2 text-2xl font-bold">{t.price}</div>
+                <div className="mt-1 text-xs text-mist">per 15s post</div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-sm font-medium text-signal-dim">{pricing.note}</p>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="mx-auto max-w-6xl px-5 pb-24 sm:px-8">
+      <section className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
         <div className="rounded-3xl bg-charcoal px-6 py-14 text-center text-white">
           <h2 className="text-2xl font-bold sm:text-3xl">{finalCta.heading}</h2>
           <Link

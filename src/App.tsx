@@ -8,6 +8,7 @@ import { Review } from "./pages/app/Review";
 import { Analytics } from "./pages/app/Analytics";
 import { Payments } from "./pages/app/Payments";
 import { Discover } from "./pages/app/Discover";
+import { Campaigns } from "./pages/app/Campaigns";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/app" element={<AppLayout />}>
         <Route index element={<Overview />} />
+        <Route path="campaigns" element={<Campaigns />} />
         <Route path="discover" element={<Discover />} />
         <Route path="board" element={<Board />} />
         <Route path="review" element={<Review />} />
